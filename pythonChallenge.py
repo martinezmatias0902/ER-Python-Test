@@ -44,37 +44,27 @@ def informeEmpleados(archivo):
                 diccionarioProvisorio["Fecha"] = listaProvisoria[1]
                 lista.append(diccionarioProvisorio)
             
-            """  resultado = contarDiasVacacionesTomados(lista)
-            print(resultado) """
-            print(lista)
-            return lista
+            #return lista
+            new_datalist = []
+            items_found = []
+            for element in lista:
+                if (not element in items_found):
+                    # items_found acumula los dic que ya se analizaron para no repetirlos
+                    items_found.append(element)
+                    elem_count = lista.count(element) # Se cuentan los elementos
+                    if elem_count > 1:
+                        # Si hay mas de 1 repeticion, crear el diccionario nuevo
+                        new_elem = {}
+                        new_elem['text'] = element['text']
+                        new_elem['type'] = element['type']
+                        new_elem['cantidad'] = elem_count 
+                        new_datalist.append(new_elem)
+            print(new_datalist)
 
-            """ while linea:
-                linea = linea.rstrip('\n')
-                campos = linea.split(',')
-                diccionario["Legajo"] = campos[0]
-                diccionario["Fecha"] = campos[1]
-                lista.append(diccionario)
-                linea = file.readline() """
-   
-            
-            return diccionario
-        
-        """ with open(archivo,'r', newline='') as file:
-            lectura_csv = csv.DictReader(file)
-            campos = lectura_csv.fieldnames
-
-            for linea in lectura_csv:
-                print(f"# Empleado/a {linea[campos[1]]} {linea[campos[2]]} con legajo numero {linea[campos[0]]} tiene {linea[campos[3]]} dias de vacaciones.")
-            return """
     except IOError:
-        print("Ocurrio un error con el archivo")
+        print("Ocurrio un error con el archivo, vuelva a intentarlo D:")
 
 
-
-
-
-# 7 a
 def menuPrincipal():
     ARCHIVO = "LegajoEmpleados.csv"
     CAMPOS = ['Legajo', 'Apellido', 'Nombre', 'Total Vacaciones']
